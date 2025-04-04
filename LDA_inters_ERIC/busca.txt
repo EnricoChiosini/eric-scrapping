@@ -1,7 +1,0 @@
-title:"interdisciplinary" OR title:"interdisciplinarity" OR title:"interdisciplinar" OR title:"interdiscipline" OR title:"multidisciplinary" OR title:"multidisciplinarity" OR title:"multidisciplinar" OR title:"multidiscipline" OR title:"pluridisciplinary" OR title:"pluridisciplinarity" OR title:"pluridisciplinar" OR title:"pluridiscipline" OR title:"transdisciplinary" OR title:"transdisciplinarity" OR title:"transdisciplinar" OR title:"transdiscipline"
-
-peer reviewed
-
-https://eric.ed.gov/?q=title%3A%22interdisciplinary%22+OR+title%3A%22interdisciplinarity%22+OR+title%3A%22interdisciplinar%22+OR+title%3A%22interdiscipline%22+OR+title%3A%22multidisciplinary%22+OR+title%3A%22multidisciplinarity%22+OR+title%3A%22multidisciplinar%22+OR+title%3A%22multidiscipline%22+OR+title%3A%22pluridisciplinary%22+OR+title%3A%22pluridisciplinarity%22+OR+title%3A%22pluridisciplinar%22+OR+title%3A%22pluridiscipline%22+OR+title%3A%22transdisciplinary%22+OR+title%3A%22transdisciplinarity%22+OR+title%3A%22transdisciplinar%22+OR+title%3A%22transdiscipline%22&pr=on
-
-data: 01/abr

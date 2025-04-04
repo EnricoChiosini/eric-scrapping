@@ -1,20 +1,20 @@
-import pandas as pd
 import os
+import pandas as pd
+
 
 def parse_nbib(file_path):
-    data = {"TI": [], "AU": [],"DP": [], "JT": [], "LA": [], "LID": [], "AB": []}
+    data = {"TI": [], "AU": [], "DP": [], "JT": [], "LA": [], "LID": [], "AB": []}
     
     with open(file_path, 'r', encoding='utf-8') as file:
         current_entry = {key: "" for key in data.keys()}
         for line in file:
-            if line.strip() == "":  
-                if any(current_entry.values()):  
+            if line.strip() == "":
+                if any(current_entry.values()):
                     for key in data.keys():
                         data[key].append(current_entry[key].strip())
                     current_entry = {key: "" for key in data.keys()}
                 continue
             
-            # Verifica se a linha começa com um dos campos desejados
             for key in data.keys():
                 if line.startswith(key + " - ") or line.startswith(key + "  - "):
                     if key == "AU":
@@ -23,34 +23,32 @@ def parse_nbib(file_path):
                         current_entry[key] += line[len(key) + 3:].strip() + " "
                     break
     
-    # Adiciona a última entrada, se necessário
     if any(current_entry.values()):
         for key in data.keys():
             data[key].append(current_entry[key].strip())
     
     return pd.DataFrame(data)
 
-# Caminho da pasta contendo os arquivos .nbib
-folder_path = 'scrap1'
+folder_path = 'temp'
+concatenated_filename = 'concatenated.nbib'
+concatenated_path = os.path.join(folder_path, concatenated_filename)
 
-# Lista para armazenar os DataFrames
-dataframes = []
+with open(concatenated_path, 'w', encoding='utf-8') as outfile:
+    for file_name in os.listdir(folder_path):
+        if file_name.endswith('.nbib') and file_name != concatenated_filename:
+            file_path = os.path.join(folder_path, file_name)
+            with open(file_path, 'r', encoding='utf-8') as infile:
+                outfile.write(infile.read())
+                outfile.write("\n")  # Adiciona quebra de linha entre os arquivos
 
-# Itera sobre todos os arquivos na pasta
 for file_name in os.listdir(folder_path):
-    if file_name.endswith('.nbib'):  # Verifica se o arquivo tem a extensão .nbib
-        file_path = os.path.join(folder_path, file_name)
-        df = parse_nbib(file_path)  # Faz o parse do arquivo e cria o DataFrame
-        dataframes.append(df)
+    if file_name.endswith('.nbib') and file_name != concatenated_filename:
+        os.remove(os.path.join(folder_path, file_name))
 
-# Concatena todos os DataFrames em um único DataFrame
-df = pd.concat(dataframes, ignore_index=True)
+df = parse_nbib(concatenated_path)
 
-# Salva os dados em um arquivo CSV na mesma pasta 'scrap1'
-# Salva os dados em um arquivo Excel na mesma pasta 'scrap1'
 excel_output_path = os.path.join(folder_path, 'nbib_data.xlsx')
 df.to_excel(excel_output_path, index=False)
 
-# Salva os dados em um arquivo CSV compactado (.csv.gz) na mesma pasta 'scrap1'
 csv_gz_output_path = os.path.join(folder_path, 'nbib_data.csv.gz')
 df.to_csv(csv_gz_output_path, index=False, compression='gzip')
